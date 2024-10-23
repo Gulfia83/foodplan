@@ -13,6 +13,7 @@ from .views import (
 
 
 urlpatterns = [
+    path("admin/", admin.site.urls),
     path('auth/', auth_view, name='auth'),
     path('card1/', card1_view, name='card1'),
     path('card2/', card2_view, name='card2'),
