@@ -1,5 +1,10 @@
+from django.contrib.auth import authenticate, login, get_user_model
 from django.shortcuts import redirect, render
-from .forms import RegistrationForm
+from django.contrib import messages
+from .forms import RegistrationForm, LoginForm
+
+
+User = get_user_model()
 
 
 def register(request):
@@ -15,6 +20,21 @@ def register(request):
 
 
 def auth_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        try:
+            user = User.objects.get(email=email)
+            user = authenticate(request, username=user.username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.error(request, 'Неверный пароль.')
+        except User.DoesNotExist:
+            messages.error(request, 'Пользователь с таким email не найден.')
+
     return render(request, 'auth.html')
 
 
