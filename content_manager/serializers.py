@@ -6,7 +6,7 @@ from recipeapp.models import Dish, RecipeItem
 class RecipeItemSerializer(ModelSerializer):
     class Meta:
         model = RecipeItem
-        fields = ['product', 'quantity']
+        fields = ['ingredient', 'quantity']
 
 
 
