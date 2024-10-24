@@ -54,6 +54,10 @@ class Dish(models.Model):
         max_length=50,
         choices=CATEGORIES
     )
+    is_active = models.BooleanField(
+        verbose_name='Активное/неактивное',
+        default=True
+    )
 
     class Meta:
         verbose_name_plural = 'Блюда'
