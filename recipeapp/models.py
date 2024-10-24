@@ -10,21 +10,6 @@ CATEGORIES = [
 ]
 
 
-class DishCategory(models.Model):
-    name = models.CharField(
-        'Название',
-        max_length=50,
-        choices=CATEGORIES
-    )
-
-    class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
-
-    def __str__(self):
-        return self.name
-
-
 class Ingredient(models.Model):
     title = models.CharField(
         verbose_name='Ингредиент',
@@ -50,11 +35,17 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient,
         related_name='recipe',
-        verbose_name='Ингредиенты'
+        verbose_name='Ингредиенты',
+        through='RecipeItem'
         )
     instruction = models.TextField(
         verbose_name='Инструкция по приготовлению',
         blank=True
+    )
+    categoty = models.CharField(
+        verbose_name='Категория',
+        max_length=50,
+        choices=CATEGORIES
     )
 
     class Meta:
