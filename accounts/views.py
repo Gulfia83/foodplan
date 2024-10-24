@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from .forms import RegistrationForm, LoginForm
@@ -38,5 +39,8 @@ def auth_view(request):
     return render(request, 'auth.html')
 
 
+@login_required
 def lk_view(request):
-    return render(request, 'lk.html')
+    user = request.user
+    context = {'name': user.username, 'email': user.email}
+    return render(request, 'lk.html', context)
