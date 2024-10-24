@@ -4,9 +4,13 @@ from recipeapp.models import Dish
 
 
 def recipe_view(request, recipe_id):
-    dish = get_object_or_404(Dish, pk=recipe_id)
+    recipe = get_object_or_404(Dish, pk=recipe_id)
+    recipe.total_price = 0
+    for item in recipe.items.all():
+        item_price = item.quantity * item.ingredient.price
+        recipe.total_price += item_price
 
-    return render(request, 'recipe.html', context={'recipe': dish})
+    return render(request, 'recipe.html', context={'recipe': recipe})
 
 
 def index_view(request):
