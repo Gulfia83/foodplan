@@ -1,3 +1,27 @@
-from django.shortcuts import render
+from django.db import transaction
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .serializers import DishSerializer
+
+
+@api_view(['POST'])
+@csrf_exempt
+@transaction.atomic
+def create_dish(request):
+    '''
+    Данные для тестирования:
+    {"items": [{"ingredient": 1, "quantity": 1}], 
+    "title": "намберван", 
+    "img": "http://localhost:8000/media/images/изображение_блюда.jpg", 
+    "instruction": "нельзя так просто взять и ...", 
+    "category": "вкусно и неполезно"}
+    '''
+    dish_serializer = DishSerializer(data=request.data)
+    dish_serializer.is_valid(raise_exception=True)
+    dish_serializer.save()
+
+
+    return Response(dish_serializer.data, status=201)
