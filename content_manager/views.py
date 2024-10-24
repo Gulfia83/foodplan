@@ -13,11 +13,11 @@ from .serializers import DishSerializer
 def create_dish(request):
     '''
     Данные для тестирования:
-    {"items": [{"ingredient": 1, "quantity": 1}], 
-    "title": "намберван", 
-    "img": "http://localhost:8000/media/images/изображение_блюда.jpg", 
-    "instruction": "нельзя так просто взять и ...", 
-    "category": "вкусно и неполезно"}
+    {"items": [{"ingredient": 1, "quantity": 1}],
+    "title": "намберван",
+    "img": "http://localhost:8000/media/dishes/beconizer.jpg",
+    "instruction": "нельзя так просто взять и ...",
+    "category": "br"}
     '''
     dish_serializer = DishSerializer(data=request.data)
     dish_serializer.is_valid(raise_exception=True)
