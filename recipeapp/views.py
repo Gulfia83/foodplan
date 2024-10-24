@@ -1,16 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+
+from recipeapp.models import Dish
 
 
-def card1_view(request):
-    return render(request, 'card1.html')
+def recipe_view(request, recipe_id):
+    dish = get_object_or_404(Dish, pk=recipe_id)
 
-
-def card2_view(request):
-    return render(request, 'card2.html')
-
-
-def card3_view(request):
-    return render(request, 'card3.html')
+    return render(request, 'recipe.html', context={'recipe': dish})
 
 
 def index_view(request):

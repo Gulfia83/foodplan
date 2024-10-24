@@ -15,6 +15,18 @@ class Ingredient(models.Model):
         verbose_name='Ингредиент',
         max_length=100
     )
+    units = models.CharField(
+        'единицы измерения',
+        max_length=20,
+        blank=True,
+        null=True,
+    )
+    price = models.DecimalField(
+        verbose_name='цена',
+        max_digits=8,
+        decimal_places=2,
+        validators=[MinValueValidator(0)]
+    )
 
     class Meta:
         verbose_name_plural = 'Ингредиенты'
@@ -23,26 +35,21 @@ class Ingredient(models.Model):
         return self.title
 
 
-class Recipe(models.Model):
-    dish = models.CharField(
+class Dish(models.Model):
+    title = models.CharField(
         verbose_name='Название блюда',
         max_length=100
     )
     img = models.ImageField(
+        upload_to='recipes',
         verbose_name='Изображение',
         blank=True
     )
-    ingredients = models.ManyToManyField(
-        Ingredient,
-        related_name='recipe',
-        verbose_name='Ингредиенты',
-        through='RecipeItem'
-        )
     instruction = models.TextField(
         verbose_name='Инструкция по приготовлению',
         blank=True
     )
-    categoty = models.CharField(
+    category = models.CharField(
         verbose_name='Категория',
         max_length=50,
         choices=CATEGORIES
@@ -52,7 +59,7 @@ class Recipe(models.Model):
         verbose_name_plural = 'Блюда'
 
     def __str__(self):
-        return self.dish
+        return self.title
 
 
 class RecipeItem(models.Model):
@@ -62,7 +69,7 @@ class RecipeItem(models.Model):
         related_name='items',
         on_delete=models.CASCADE)
     recipe = models.ForeignKey(
-        Recipe,
+        Dish,
         verbose_name='Рецепт',
         related_name='items',
         on_delete=models.CASCADE
@@ -70,12 +77,6 @@ class RecipeItem(models.Model):
     quantity = models.IntegerField(
         validators=[MinValueValidator(1)],
         verbose_name='Количество'
-    )
-    price = models.DecimalField(
-        verbose_name='цена',
-        max_digits=8,
-        decimal_places=2,
-        validators=[MinValueValidator(0)]
     )
 
     class Meta:
