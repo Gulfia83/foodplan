@@ -13,3 +13,9 @@ class RegistrationForm(UserCreationForm):
 class LoginForm(forms.Form):
     email = forms.EmailField(label='Email', max_length=254)
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
+
+
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['avatar']

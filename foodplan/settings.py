@@ -88,7 +88,12 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-MEDIA_ROOT = BASE_DIR / 'media'  
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 MEDIA_URL = '/media/'
-AUTH_USER_MODEL = 'accounts.CustomUser'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGOUT_URL = 'accounts:logout'
+
+LOGOUT_REDIRECT_URL = ''

@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, AvatarForm
 
 
 User = get_user_model()
@@ -38,5 +39,22 @@ def auth_view(request):
     return render(request, 'auth.html')
 
 
+@login_required
 def lk_view(request):
-    return render(request, 'lk.html')
+    user = request.user
+    context = {'name': user.username, 'email': user.email}
+    return render(request, 'lk.html', context)
+
+
+@login_required
+def upload_avatar(request):
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = request.user
+            user.avatar = form.cleaned_data['avatar']
+            user.save()
+            return redirect('accounts:lk')
+    else:
+        form = AvatarForm()
+    return render(request, 'upload_avatar.html', {'form': form})
