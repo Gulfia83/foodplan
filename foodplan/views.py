@@ -1,8 +1,5 @@
 from django.shortcuts import render
 
-def auth_view(request):
-    return render(request, 'auth.html')
-
 
 def card1_view(request):
     return render(request, 'card1.html')
@@ -22,11 +19,3 @@ def index_view(request):
 
 def order_view(request):
     return render(request, 'order.html')
-
-
-def lk_view(request):
-    return render(request, 'lk.html')
-
-
-def registration_view(request):
-    return render(request, 'registration.html')
