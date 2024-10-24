@@ -10,7 +10,7 @@ from .views import (
 
 
 urlpatterns = [
-     path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('card1/', card1_view, name='card1'),
     path('card2/', card2_view, name='card2'),
     path('card3/', card3_view, name='card3'),
