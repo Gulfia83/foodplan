@@ -14,6 +14,7 @@ from recipeapp.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('recipe/<int:recipe_id>', recipe_view, name='recipe'),
+    path('recipe/', recipe_view, {'recipe_id': 1}, name='recipe_default'),  
     path('', index_view, name='index'),
     path('order/', order_view, name='order'),
     path('', include(('accounts.urls', 'accounts'), namespace='accounts')),
