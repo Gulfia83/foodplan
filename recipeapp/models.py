@@ -45,6 +45,10 @@ class Dish(models.Model):
         verbose_name='Изображение',
         blank=True
     )
+    description = models.TextField(
+        verbose_name='Описание блюда',
+        blank=True
+    )
     instruction = models.TextField(
         verbose_name='Инструкция по приготовлению',
         blank=True
