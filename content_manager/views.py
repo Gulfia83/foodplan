@@ -1,8 +1,9 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db import transaction
 from django.forms import modelformset_factory
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -11,6 +12,7 @@ from .serializers import DishSerializer
 
 from recipeapp.forms import DishForm, RecipeItemForm
 from recipeapp.models import Dish, RecipeItem
+
 
 #TODO: придумать как пихнуть в drf  картинку 
 @api_view(['POST'])
@@ -60,3 +62,25 @@ def create_dish_form(request):
         'dish_form': dish_form,
         'items_formset': items_formset,
     })
+
+
+@staff_member_required
+def view_dishes(request):
+    dishes = Dish.objects.all()
+    context = {'dishes': dishes}
+    return render(request, template_name='dishes.html', context=context)
+
+
+@staff_member_required
+def dish_edit(request, pk):
+    dish = get_object_or_404(Dish, pk=pk)
+    
+    if request.method == 'POST':
+        form = DishForm(request.POST, request.FILES, instance=dish)
+        if form.is_valid():
+            form.save()
+            return redirect('content_manager:dishes')
+    else:
+        form = DishForm(instance=dish)
+
+    return render(request, 'dish_edit.html', {'form': form, 'dish': dish})
