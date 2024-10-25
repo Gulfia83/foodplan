@@ -8,7 +8,8 @@ from recipeapp.views import (
     recipe_view,
     index_view,
     order_view,
-    all_recipes_view
+    all_recipes_view,
+    day_menu_view
 )
 
 
@@ -19,6 +20,7 @@ urlpatterns = [
     path('', index_view, name='index'),
     path('order/', order_view, name='order'),
     path('all_recipes/', all_recipes_view, name='all_recipes'),
+    path('day_menu/', day_menu_view, name='day_menu'),
     path('', include(('accounts.urls', 'accounts'), namespace='accounts')),
     path('', include(('content_manager.urls', 'content_manager'), namespace='content_manager')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

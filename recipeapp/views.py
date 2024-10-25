@@ -1,3 +1,4 @@
+from random import choice
 from django.shortcuts import render, get_object_or_404
 
 from recipeapp.models import Dish
@@ -16,6 +17,18 @@ def recipe_view(request, recipe_id):
 def all_recipes_view(request):
     recipes = Dish.objects.filter(is_active=True)
     return render(request, 'all_recipes.html', context={'recipes': recipes})
+
+
+def day_menu_view(request):
+    random_breakfast = choice(Dish.objects.filter(category='br'))
+    random_lunch = choice(Dish.objects.filter(category='l'))
+    random_dinner = choice(Dish.objects.filter(category='din'))
+
+    context = {'breakfast': random_breakfast,
+               'lunch': random_lunch,
+               'dinner': random_dinner
+               }
+    return render(request, 'day_menu.html', context=context)
 
 
 def index_view(request):
