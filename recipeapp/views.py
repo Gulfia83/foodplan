@@ -19,15 +19,37 @@ def all_recipes_view(request):
     return render(request, 'all_recipes.html', context={'recipes': recipes})
 
 
-def day_menu_view(request):
-    random_breakfast = choice(Dish.objects.filter(category='br'))
-    random_lunch = choice(Dish.objects.filter(category='l'))
-    random_dinner = choice(Dish.objects.filter(category='din'))
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-    context = {'breakfast': random_breakfast,
-               'lunch': random_lunch,
-               'dinner': random_dinner
-               }
+
+def day_menu_view(request):
+    breakfast_queryset = Dish.objects.filter(category='br', is_active=True)
+    lunch_queryset = Dish.objects.filter(category='l', is_active=True)
+    dinner_queryset = Dish.objects.filter(category='din', is_active=True)
+
+    if is_ajax(request):
+        random_breakfast = choice(breakfast_queryset)
+        random_lunch = choice(lunch_queryset)
+        random_dinner = choice(dinner_queryset)
+
+        context = {
+            'breakfast': random_breakfast,
+            'lunch': random_lunch,
+            'dinner': random_dinner,
+        }
+        return render(request, 'partial_day_menu.html', context)
+
+    # Случайное блюдо при первоначальной загрузке страницы
+    random_breakfast = choice(breakfast_queryset)
+    random_lunch = choice(lunch_queryset)
+    random_dinner = choice(dinner_queryset)
+
+    context = {
+        'breakfast': random_breakfast,
+        'lunch': random_lunch,
+        'dinner': random_dinner,
+    }
     return render(request, 'day_menu.html', context=context)
 
 

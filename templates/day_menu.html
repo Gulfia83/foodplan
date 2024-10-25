@@ -7,29 +7,56 @@
     <h2>Меню на день</h2>
   </center>
   <hr/>
-  <table class="table table-responsive">
-    <tr>
-      <th>Завтрак</th>
-      <th>Обед</th>
-      <th>Ужин</th>
-    </tr>
-    <tr>
-      <th>
-        <a href="{% url 'recipe' breakfast.id %}" class="title">{{breakfast}}</a>
-          <br>
-          <img src="{{ breakfast.img.url }}" style="max-width: 50%">
-      </th>
-      <th>
-        <a href="{% url 'recipe' lunch.id %}" class="title">{{ lunch }}</a>
-          <br>
-          <img src="{{ lunch.img.url }}" style="max-width: 50%">
-      </th>
-        <th>
-          <a href="{% url 'recipe' dinner.id %}" class="title">{{ dinner }}</a>
-          <br>
-          <img src="{{ dinner.img.url }}" style="max-width: 50%">
-      </th>
-    </tr>
-  </table>
+  <table class="table table-responsive" id="menu-table">
+    <thead>
+        <tr>
+            <th>Завтрак</th>
+            <th>Обед</th>
+            <th>Ужин</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>
+                <a href="{% url 'recipe' breakfast.id %}" class="title">{{ breakfast.title }}</a>
+                <br>
+                <img src="{{ breakfast.img.url }}" style="max-width: 50%">
+            </th>
+            <th>
+                <a href="{% url 'recipe' lunch.id %}" class="title">{{ lunch.title }}</a>
+                <br>
+                <img src="{{ lunch.img.url }}" style="max-width: 50%">
+            </th>
+            <th>
+                <a href="{% url 'recipe' dinner.id %}" class="title">{{ dinner.title }}</a>
+                <br>
+                <img src="{{ dinner.img.url }}" style="max-width: 50%">
+            </th>
+        </tr>
+    </tbody>
+</table>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function updateMenu() {
+      $.ajax({
+          url: "{% url 'day_menu' %}",
+          type: 'GET',
+          dataType: 'html',
+          success: function(data) {
+              console.log('New data received:', data); // Логируем данные для отладки
+              $('#menu-table tbody').empty(); // Очищаем существующие строки
+              // Используйте find для получения новых строк
+              $('#menu-table tbody').append(data); // Добавляем новые строки
+          },
+          error: function(xhr, status, error) {
+              console.error('Ошибка AJAX:', status, error);
+          }
+      });
+  }
+
+  setInterval(updateMenu, 30000); // Каждые 30 секунд
+</script>
 {% endblock %}
