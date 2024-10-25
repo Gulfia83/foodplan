@@ -14,15 +14,18 @@
       <th>Ужин</th>
     </tr>
     <tr>
-      <th>{{ breakfast }}
+      <th>
+        <a href="{% url 'recipe' breakfast.id %}" class="title">{{breakfast}}</a>
           <br>
           <img src="{{ breakfast.img.url }}" style="max-width: 50%">
       </th>
-      <th>{{ lunch }}
+      <th>
+        <a href="{% url 'recipe' lunch.id %}" class="title">{{ lunch }}</a>
           <br>
           <img src="{{ lunch.img.url }}" style="max-width: 50%">
       </th>
-        <th>{{ dinner }}
+        <th>
+          <a href="{% url 'recipe' dinner.id %}" class="title">{{ dinner }}</a>
           <br>
           <img src="{{ dinner.img.url }}" style="max-width: 50%">
       </th>
