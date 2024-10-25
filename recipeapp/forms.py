@@ -4,7 +4,7 @@ from .models import Dish, RecipeItem
 class DishForm(forms.ModelForm):
     class Meta:
         model = Dish
-        fields = ['title', 'img', 'instruction', 'category', 'is_active']
+        fields = ['title', 'img', 'description', 'instruction', 'category', 'is_active']
 
 class RecipeItemForm(forms.ModelForm):
     class Meta:

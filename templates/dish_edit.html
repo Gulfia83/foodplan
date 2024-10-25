@@ -1,0 +1,8 @@
+<h2>Редактировать блюдо</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить изменения</button>
+</form>
+
+<a href="{% url 'content_manager:dishes' %}">Отмена</a>
