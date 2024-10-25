@@ -13,6 +13,11 @@ def recipe_view(request, recipe_id):
     return render(request, 'recipe.html', context={'recipe': recipe})
 
 
+def all_recipes_view(request):
+    recipes = Dish.objects.filter(is_active=True)
+    return render(request, 'all_recipes.html', context={'recipes': recipes})
+
+
 def index_view(request):
     return render(request, 'index.html')
 
