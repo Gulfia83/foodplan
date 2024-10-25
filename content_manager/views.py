@@ -84,3 +84,4 @@ def dish_edit(request, pk):
         form = DishForm(instance=dish)
 
     return render(request, 'dish_edit.html', {'form': form, 'dish': dish})
+    
