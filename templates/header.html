@@ -9,6 +9,8 @@
             </a>
             {% if user.is_staff %}
             <a href="{% url 'content_manager:dishes' %}" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Блюда редактировать</a>
+            {% endif %}
+            {% if user.is_authenticated %}
             <form action="{% url 'accounts:logout' %}" method="post" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Выйти</button>
