@@ -2,8 +2,9 @@
 <header id="header">
     <nav class="navbar navbar-light fixed-top navbar__opacity">
         <div class="container">
+            <a href="{% url 'index' %}" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Главная</a>
             <a href="{% url 'accounts:lk' %}" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Личный кабинет</a>
-            <a class="navbar-brand" href="{% url 'index' %}">
+            <a class="navbar-brand" href="https://dvmn.org/">
                 <img src="{% static 'img/logo.8d8f24edbb5f.svg' %}" height="55" width="189" alt="">
             </a>
             {% if user.is_authenticated %}
