@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}План питания на неделю, меню, рецепты, список покупок. Классическое меню, безуглеводное меню{% endblock %}
+{% block content %}
+<div class="container">
+  <center>
+    <h2>Меню на день</h2>
+  </center>
+  <hr/>
+  <table class="table table-responsive">
+    <tr>
+      <th>Завтрак</th>
+      <th>Обед</th>
+      <th>Ужин</th>
+    </tr>
+    <tr>
+      <th>{{menu.breakfast}}
+          <br>
+          <img src="{{ menu.breakfast.img.url }}" style="max-width: 50%">
+      </th>
+      <th>{{menu.lunch}}
+          <br>
+          <img src="{{ menu.lunch.img.url }}" style="max-width: 50%">
+      </th>
+        <th>{{menu.dinner}}
+          <br>
+          <img src="{{ menu.dinner.img.url }}" style="max-width: 50%">
+      </th>
+    </tr>
+  </table>
+</div>
+{% endblock %}
