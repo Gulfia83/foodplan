@@ -2,6 +2,13 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+    <h2>Ингредиенты</h2>
+        {{ items_formset.management_form }}
+        {% for form in items_formset %}
+            {{ form.as_p }}
+        {% endfor %}
+        
+        <button type="submit">Сохранить блюдо</button>
     <button type="submit">Сохранить изменения</button>
 </form>
 

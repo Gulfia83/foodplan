@@ -38,9 +38,9 @@ def create_dish_drf(request):
 @staff_member_required
 def create_dish_form(request):
     RecipeItemFormSet = modelformset_factory(
-    RecipeItem,
-    form=RecipeItemForm,
-    extra=10
+        RecipeItem,
+        form=RecipeItemForm,
+        extra=10
 )
     if request.method == 'POST':
         dish_form = DishForm(request.POST, request.FILES)
@@ -74,14 +74,30 @@ def view_dishes(request):
 @staff_member_required
 def dish_edit(request, pk):
     dish = get_object_or_404(Dish, pk=pk)
-    
+    RecipeItemFormSet = modelformset_factory(
+        RecipeItem,
+        form=RecipeItemForm,
+        extra=1,
+        can_delete=True
+    )
     if request.method == 'POST':
         form = DishForm(request.POST, request.FILES, instance=dish)
-        if form.is_valid():
+        items_formset = RecipeItemFormSet(request.POST, queryset=RecipeItem.objects.filter(recipe=dish))
+
+        if form.is_valid() and items_formset.is_valid():
             form.save()
+
+            recipe_items = items_formset.save(commit=False)
+            for item in recipe_items:
+                item.recipe = dish
+                item.save()
+            for deleted_item in items_formset.deleted_objects:
+                item.delete()
+
             return redirect('content_manager:dishes')
     else:
         form = DishForm(instance=dish)
+        items_formset = RecipeItemFormSet(queryset=RecipeItem.objects.filter(recipe=dish))
 
-    return render(request, 'dish_edit.html', {'form': form, 'dish': dish})
+    return render(request, 'dish_edit.html', {'form': form, 'dish': dish, 'items_formset': items_formset})
     
