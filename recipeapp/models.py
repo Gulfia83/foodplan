@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.db.models import Sum, F
+from django.db.models.functions import Round
 
 
 CATEGORIES = [
@@ -8,6 +10,17 @@ CATEGORIES = [
     ('din', 'ужины'),
     ('des', 'десерты')
 ]
+
+
+class DishQuerySet(models.QuerySet):
+    def get_total_price(self):
+        total_price = self.annotate(
+            price=Round(Sum(
+                F('items__ingredient__price') * F('items__quantity')
+                )
+            )
+            )
+        return total_price
 
 
 class Ingredient(models.Model):
@@ -62,6 +75,8 @@ class Dish(models.Model):
         verbose_name='Активное/неактивное',
         default=True
     )
+
+    objects = DishQuerySet.as_manager()
 
     class Meta:
         verbose_name_plural = 'Блюда'

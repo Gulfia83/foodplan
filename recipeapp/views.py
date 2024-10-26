@@ -5,17 +5,25 @@ from recipeapp.models import Dish
 
 
 def recipe_view(request, recipe_id):
-    recipe = get_object_or_404(Dish, pk=recipe_id)
-    recipe.total_price = 0
-    for item in recipe.items.all():
-        item_price = item.quantity * item.ingredient.price
-        recipe.total_price += item_price
+    recipe = get_object_or_404(Dish.objects.get_total_price(), pk=recipe_id)
+    #recipe.total_price = 0
+    #for item in recipe.items.all():
+    #    item_price = item.quantity * item.ingredient.price
+    #    recipe.total_price += item_price
 
     return render(request, 'recipe.html', context={'recipe': recipe})
 
 
+def cheap_recipes_view(request):
+    recipes = Dish.objects.get_total_price().filter(is_active=True,
+                                                    price__lte=400)
+
+    return render(request, 'all_recipes.html', context={'recipes': recipes})
+
+
 def all_recipes_view(request):
     recipes = Dish.objects.filter(is_active=True)
+
     return render(request, 'all_recipes.html', context={'recipes': recipes})
 
 
