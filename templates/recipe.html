@@ -23,6 +23,11 @@
                 <h4>Инструкция по приготовлению</h4>
                 {{ recipe.instruction }}
                 <h6>Себестоимость блюда: {{ recipe.price }} р.</h6>
+                <form action="{% url 'accounts:like' recipe.id %}" method="post" class="like-form">
+                  {% csrf_token %}
+                  <button type="submit">Лайк</button>
+              </form>
+              <div id="like-status-{{ dish.id }}"></div>
               </div>
           </div>
       </div>
