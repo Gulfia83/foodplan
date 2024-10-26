@@ -27,7 +27,6 @@ def all_recipes_view(request):
     return render(request, 'all_recipes.html', context={'recipes': recipes, 'title': 'Все рецепты'})
 
 
-
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 

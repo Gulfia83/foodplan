@@ -1,7 +1,13 @@
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
+from django.utils.decorators import method_decorator
+from django.views import View
+
+from accounts.models import Like
+from recipeapp.models import Dish
 from .forms import RegistrationForm, AvatarForm
 
 
@@ -58,3 +64,19 @@ def upload_avatar(request):
     else:
         form = AvatarForm()
     return render(request, 'upload_avatar.html', {'form': form})
+
+
+@login_required
+def create_like(request, pk):
+    if request.method == 'POST':
+        dish = get_object_or_404(Dish, pk=pk)
+        like, created = Like.objects.get_or_create(user=request.user, dish=dish)
+
+        if created:
+            message = 'Лайк добавлен!'
+        else:
+            message = 'Вы уже лайкнули это блюдо.'
+
+        return JsonResponse({'message': message})
+
+    return JsonResponse({'message': 'Неверный метод.'}, status=405)

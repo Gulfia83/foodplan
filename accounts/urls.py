@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls import path
 
-from .views import register, auth_view, lk_view, upload_avatar
+from .views import register, auth_view, lk_view, upload_avatar, create_like
 
 
 
@@ -13,4 +13,5 @@ urlpatterns = [
     path('upload-avatar/', upload_avatar, name='upload_avatar'),
     path('logout/', LogoutView.as_view(next_page='index'), name='logout'),
     path('accounts/login/', auth_view, name='login'),
+    path('like/<int:pk>/', create_like, name='like'),
 ]
