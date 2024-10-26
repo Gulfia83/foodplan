@@ -16,8 +16,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'foodplan',
-    'accounts'
+    'recipeapp',
+    'accounts',
+    'content_manager',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,42 @@
+  <center>
+    <h2>Блюда</h2>
+  </center>
+  <hr/>
+  <br/>
+  <br/>
+  <div class="container">
+    <table class="table table-responsive">
+     <tr>
+       <th>ID блюда</th>
+       <th>Название</th>
+       <th>Изображение</th>
+       <th>Описание</th>
+       <th>Инструкция</th>
+       <th>Категория</th>
+       <th>Активно?</th>
+       <th>Ссылка на админку</th>
+       <th>Редактировать</th>
+     </tr>
+ 
+     {% for dish in dishes %}
+     <tr>
+      <td>{{ dish.id }}</td>
+      <td>{{ dish.title }}</td>
+      <td><img src="{{ dish.img.url }}" alt="{{ dish.title }}" style="max-width: 100px; max-height: 100px;"></td>
+      <td>{{ dish.description }} руб.</td>
+      <td>{{ dish.instruction}} {{ order.lastname }}</td>
+      <td>{{ dish.category }}</td>
+      <td>
+        {% if dish.is_active %}
+            &#10003; <!-- Галочка -->
+        {% else %}
+            &#10007; <!-- Крестик -->
+        {% endif %}
+    </td>
+      <td><a href="{% url 'admin:recipeapp_dish_change' object_id=dish.id %}?next={{ request.get_full_path|urlencode }}">Админка</a></td>
+      <td><a href="{% url 'content_manager:dish_edit' dish.id %}">Редактировать</a></td>
+     </tr>
+    {% endfor %}
+    </table>
+    <td><a href="{% url 'content_manager:create_dish_form' %}">Добавить новое блюдо</a></td>
+ </div>
