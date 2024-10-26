@@ -8,7 +8,7 @@ from django.views import View
 
 from accounts.models import Like
 from recipeapp.models import Dish
-from .forms import RegistrationForm, AvatarForm, LikeForm
+from .forms import RegistrationForm, AvatarForm
 
 
 User = get_user_model()
@@ -66,15 +66,17 @@ def upload_avatar(request):
     return render(request, 'upload_avatar.html', {'form': form})
 
 
-@method_decorator(login_required, name='dispatch')
-class LikeView(View):
-
-    def create_like(self, request, *args, **kwargs):
-        dish = get_object_or_404(Dish, pk=self.kwargs.get("pk"))
+@login_required
+def create_like(request, pk):
+    if request.method == 'POST':
+        dish = get_object_or_404(Dish, pk=pk)
         like, created = Like.objects.get_or_create(user=request.user, dish=dish)
 
         if created:
-            return JsonResponse({'status': 'liked', 'message': 'Вы лайкнули это блюдо!'})
+            message = 'Лайк добавлен!'
         else:
-            return JsonResponse({'status': 'already_liked', 'message': 'Вы уже лайкнули это блюдо!'})
-        
+            message = 'Вы уже лайкнули это блюдо.'
+
+        return JsonResponse({'message': message})
+
+    return JsonResponse({'message': 'Неверный метод.'}, status=405)

@@ -19,9 +19,3 @@ class AvatarForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['avatar']
-
-
-class LikeForm(forms.ModelForm):
-    class Meta:
-        model = Like
-        fields = ['user', 'dish']
