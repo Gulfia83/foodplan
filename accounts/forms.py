@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import CustomUser, Like
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -19,3 +19,9 @@ class AvatarForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['avatar']
+
+
+class LikeForm(forms.ModelForm):
+    class Meta:
+        model = Like
+        fields = ['user', 'dish']
