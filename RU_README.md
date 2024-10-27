@@ -2,7 +2,7 @@
 
 ## Демо-версия сайта
 
-
+[Foodplan](https://gulfia83.pythonanywhere.com/)
 
 ## Функциональные возможности
 
