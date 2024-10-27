@@ -3,6 +3,13 @@ from datetime import datetime
 from django.shortcuts import render, get_object_or_404
 
 from recipeapp.models import Dish, Menu
+from accounts.models import Like
+
+
+def liked_recipes_view(request):
+    liked_dishes = Like.objects.filter(user=request.user).select_related('dish')
+    
+    return render(request, 'liked_recipes.html', {'liked_dishes': liked_dishes})
 
 
 def recipe_view(request, recipe_id):

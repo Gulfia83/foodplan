@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}План питания на неделю, меню, рецепты, список покупок. Классическое меню, безуглеводное меню{% endblock %}
+{% block content %}
+  <center>
+    <h2>{{ title }}</h2>
+  </center>
+
+  <div class="container">
+    <table class="table table-responsive">
+      {% for like in liked_dishes %}
+          <tr>
+              <td><img src="{{ like.dish.img.url }}" alt="" style="width: 200px; height: 130px;"></td>
+              <td><a href="{% url 'recipe' like.dish.id %}" class="title">{{ like.dish.title }}</a></td>
+              <td>
+                  {% for item in like.dish.items.all %}
+                      {{ item.ingredient.title }} - {{ item.quantity }}{{item.ingredient.units}},
+                  {% endfor %}
+              </td>
+          </tr>
+      {% endfor %}
+  </table>
+  </div>
+  {% endblock %}
