@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-
 from environs import Env
 
 env = Env()
@@ -8,11 +7,12 @@ env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = env.str('SECRET_KEY')
+# Использование секретного ключа из переменной окружения
+SECRET_KEY = env.str('SECRET_KEY')  # Убедитесь, что вы определили его в .env
 
-DEBUG = env.bool('DEBUG', False)
+DEBUG = env.bool('DEBUG', False)  # Для продакшн среды это всегда должно быть False
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', 'gulfia83.pythonanywhere.com')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', ['yourdomain.com', 'www.yourdomain.com'])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     'recipeapp',
     'accounts',
     'content_manager',
-    'rest_framework'
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -42,7 +42,7 @@ ROOT_URLCONF = 'foodplan.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates"),],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -59,8 +59,8 @@ WSGI_APPLICATION = 'foodplan.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # Измените на более устойчивую базу данных (например, PostgreSQL) для продакшн
+        'NAME': BASE_DIR / 'db.sqlite3',  # Измените на имя вашей базы данных
     }
 }
 
@@ -100,15 +100,16 @@ STATIC_ROOT = BASE_DIR / 'assets'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 MEDIA_URL = '/media/'
-
 MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGOUT_URL = 'accounts:logout'
+LOGOUT_REDIRECT_URL = '/'
 
-LOGOUT_REDIRECT_URL = ''
-
-INTERNAL_IPS = [
-    # ...
-    '127.0.0.1',
-    # ...
-]
+# Настройки безопасности
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
