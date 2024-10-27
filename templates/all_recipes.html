@@ -14,7 +14,7 @@
               <td><a href="{% url 'recipe' recipe.id %}" class="title">{{ recipe.title }}</a></td>
               <td>
                   {% for item in recipe.items.all %}
-                      {{ item.ingredient.title }} - {{ item.quantity }},
+                      {{ item.ingredient.title }} - {{ item.quantity }}{{item.ingredient.units}},
                   {% endfor %}
               </td>
               <td>{{ recipe.price }} руб.</td>

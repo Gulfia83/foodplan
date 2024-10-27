@@ -15,13 +15,13 @@ def cheap_recipes_view(request):
     recipes = Dish.objects.get_total_price().filter(is_active=True,
                                                     price__lte=400)
 
-    return render(request, 'all_recipes.html', context={'recipes': recipes, 'title': 'Недорогие рецепты'})
+    return render(request, 'all_recipes.html', context={'recipes': recipes, 'title': 'Рецепты'})
 
 
 def all_recipes_view(request):
     recipes = Dish.objects.get_total_price().filter(is_active=True)
 
-    return render(request, 'all_recipes.html', context={'recipes': recipes, 'title': 'Все рецепты'})
+    return render(request, 'all_recipes.html', context={'recipes': recipes, 'title': 'Рецепты'})
 
 
 def day_menu_view(request):
