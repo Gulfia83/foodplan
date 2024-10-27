@@ -3,12 +3,17 @@ from django.http import HttpResponseRedirect
 from django.utils.http import url_has_allowed_host_and_scheme
 
 from foodplan import settings
-from recipeapp.models import Ingredient, Dish, RecipeItem
+from recipeapp.models import Ingredient, Dish, RecipeItem, Menu
 
 
 class RecipeItemInline(admin.TabularInline):
     model = RecipeItem
     extra = 5
+
+
+@admin.register(Menu)
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ('id', 'day_of_week')
 
 
 @admin.register(Ingredient)
