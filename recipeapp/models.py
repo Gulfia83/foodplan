@@ -121,22 +121,22 @@ class RecipeItem(models.Model):
     
 
 class Menu(models.Model):
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
     breakfast = models.ForeignKey(
         Dish,
         on_delete=models.CASCADE,
         verbose_name='Завтрак',
-        related_name='breakfast')
+        related_name='breakfast_menu')
     lunch = models.ForeignKey(
         Dish,
         on_delete=models.CASCADE,
         verbose_name='Обед',
-        related_name='lunch')
+        related_name='lunch_menu')
     dinner = models.ForeignKey(
         Dish,
         on_delete=models.CASCADE,
         verbose_name='Ужин',
-        related_name='dinner')
+        related_name='dinner_menu')
     day_of_week = models.CharField(
         max_length=50,
         verbose_name='День недели',
