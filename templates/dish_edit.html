@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <h2>Редактировать блюдо</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -13,3 +16,4 @@
 </form>
 
 <a href="{% url 'content_manager:dishes' %}">Отмена</a>
+{% endblock %}

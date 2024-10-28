@@ -1,4 +1,6 @@
-  <a href="{% url 'index' %}" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Главная</a>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
   <center>
     <h2>Блюда</h2>
   </center>
@@ -41,3 +43,4 @@
     </table>
     <td><a href="{% url 'content_manager:create_dish_form' %}">Добавить новое блюдо</a></td>
  </div>
+ {% endblock %}
