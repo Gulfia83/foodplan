@@ -7,12 +7,11 @@ env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Использование секретного ключа из переменной окружения
-SECRET_KEY = env.str('SECRET_KEY')  # Убедитесь, что вы определили его в .env
+SECRET_KEY = env.str('SECRET_KEY')
 
-DEBUG = env.bool('DEBUG', False)  # Для продакшн среды это всегда должно быть False
+DEBUG = env.bool('DEBUG', False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', ['yourdomain.com', 'www.yourdomain.com'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -105,7 +104,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOGOUT_URL = 'accounts:logout'
 LOGOUT_REDIRECT_URL = '/'
 
-# Настройки безопасности
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_HSTS_SECONDS = 3600
