@@ -1,6 +1,7 @@
 from random import choice
 from datetime import datetime
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Case, When
 
 from recipeapp.models import Dish, Menu
 from accounts.models import Like
@@ -28,11 +29,15 @@ def cheap_recipes_view(request):
                                                         'user': request.user})
     
 
-
 def all_recipes_view(request):
     dishes = Dish.objects.get_total_price().filter(is_active=True)
     liked_dishes = Like.objects.filter(user=request.user).values_list('dish_id', flat=True)
-    
+    dishes = dishes.annotate(
+        is_liked=Case(
+            When(id__in=liked_dishes, then=1),
+            default=0
+        )
+    ).order_by('-is_liked')
     return render(request, 'all_recipes.html', context={'dishes': dishes,
                                                         'liked_dishes': liked_dishes,
                                                         'user': request.user})
