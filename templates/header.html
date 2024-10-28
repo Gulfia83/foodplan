@@ -8,7 +8,7 @@
                 <img src="{% static 'img/logo.8d8f24edbb5f.svg' %}" height="55" width="189" alt="">
             </a>
             {% if user.is_staff %}
-            <a href="{% url 'content_manager:dishes' %}" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Блюда редактировать</a>
+            <a href="{% url 'content_manager:dishes' %}" class="btn shadow-none btn-outline-success foodplan_green foodplan__border_green">Редактирование блюд</a>
             {% endif %}
             {% if user.is_authenticated %}
             <form action="{% url 'accounts:logout' %}" method="post" style="display: inline;">
