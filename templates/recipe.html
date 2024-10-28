@@ -23,34 +23,8 @@
                 <h4>Инструкция по приготовлению</h4>
                 {{ recipe.instruction }}
                 <h6>Себестоимость блюда: {{ recipe.price }} р.</h6>
-                <form class="like-form" action="{% url 'accounts:like' recipe.id %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" class="like-button" data-dish-id="{{ recipe.id }}">Лайк</button>
-              </form>
-              <div id="like-status-{{ recipe.id }}"></div>
               </div>
           </div>
       </div>
   </section>
-
-  <script>
-    document.querySelectorAll('.like-form').forEach(function(form) {
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Предотвращаем стандартное поведение формы
-    
-            const formData = new FormData(form); // Получаем данные формы
-    
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                const statusDiv = document.getElementById('like-status-' + form.querySelector('.like-button').getAttribute('data-dish-id'));
-                statusDiv.textContent = data.message; // Показываем сообщение о статусе лайка
-            })
-            .catch(error => console.error('Ошибка:', error));
-        });
-    });
-  </script>
 {% endblock %}
