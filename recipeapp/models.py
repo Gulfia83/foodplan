@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
-from django.db.models import Sum, F
+from django.db.models import Sum, F, Count
 from django.db.models.functions import Round
 
 
@@ -31,6 +31,13 @@ class DishQuerySet(models.QuerySet):
             )
             )
         return total_price
+
+    def get_likes_count(self):
+        likes_count = self.annotate(likes_count=Count('likes'))\
+            .filter(likes_count__gte=0)\
+            .prefetch_related('likes')
+        
+        return likes_count
 
 
 class Ingredient(models.Model):

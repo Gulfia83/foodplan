@@ -30,14 +30,16 @@ def cheap_recipes_view(request):
     
 
 def all_recipes_view(request):
-    dishes = Dish.objects.get_total_price().filter(is_active=True)
+    dishes = Dish.objects.get_total_price()\
+        .get_likes_count()\
+        .filter(is_active=True)
     liked_dishes = Like.objects.filter(user=request.user).values_list('dish_id', flat=True)
     dishes = dishes.annotate(
         is_liked=Case(
             When(id__in=liked_dishes, then=1),
             default=0
         )
-    ).order_by('-is_liked')
+    ).order_by('-is_liked', '-likes_count')
     return render(request, 'all_recipes.html', context={'dishes': dishes,
                                                         'liked_dishes': liked_dishes,
                                                         'user': request.user})

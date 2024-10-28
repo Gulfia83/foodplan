@@ -24,7 +24,7 @@
                   <button type="submit" class="like-button {% if user.is_authenticated and dish.id in liked_dishes %}liked{% endif %}" data-dish-id="{{ dish.id }}">
                     {% if dish.id in liked_dishes %}❤️{% else %}🤍{% endif %}
                   </button>
-                </form>
+                </form>Это блюдо лайкнули {{dish.likes_count}} раз
                 <div id="like-status-{{ dish.id }}"></div>
               </td>
           </tr>
