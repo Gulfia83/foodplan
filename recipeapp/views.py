@@ -7,6 +7,12 @@ from recipeapp.models import Dish, Menu
 from accounts.models import Like
 
 
+def show_default_recipe(request):
+    dish = Dish.objects.get_total_price().filter(is_active=True).first()
+    context = {'recipe': dish}
+    return render(request, 'recipe.html', context)
+
+
 def liked_recipes_view(request):
     liked_dishes = Like.objects.filter(user=request.user).select_related('dish').filter(dish__is_active=True)
     
