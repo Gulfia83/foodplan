@@ -11,7 +11,7 @@
       {% for like in liked_dishes %}
           <tr>
               <td><img src="{{ like.dish.img.url }}" alt="" style="width: 200px; height: 130px;"></td>
-              <td><a href="{% url 'recipe' like.dish.id %}" class="title">{{ like.dish.title }}</a></td>
+              <td><a href="{% url 'recipe' like.dish.id %}" class="black-title">{{ like.dish.title }}</a></td>
               <td>
                   {% for item in like.dish.items.all %}
                       {{ item.ingredient.title }} - {{ item.quantity }}{{item.ingredient.units}},

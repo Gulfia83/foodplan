@@ -11,7 +11,7 @@
       {% for dish in dishes %}
           <tr>
               <td><img src="{{ dish.img.url }}" alt="" style="width: 200px; height: 130px;"></td>
-              <td><a href="{% url 'recipe' dish.id %}" class="title">{{ dish.title }}</a></td>
+              <td><a href="{% url 'recipe' dish.id %}" class="black-title">{{ dish.title }}</a></td>
               <td>
                   {% for item in dish.items.all %}
                       {{ item.ingredient.title }} - {{ item.quantity }}{{item.ingredient.units}},
@@ -22,7 +22,7 @@
                 <form class="like-form" action="{% url 'accounts:like' dish.id %}" method="post">
                   {% csrf_token %}
                   <button type="submit" class="like-button {% if user.is_authenticated and dish.id in liked_dishes %}liked{% endif %}" data-dish-id="{{ dish.id }}">
-                    🤍
+                    {% if dish.id in liked_dishes %}❤️{% else %}🤍{% endif %}
                   </button>
                 </form>
                 <div id="like-status-{{ dish.id }}"></div>

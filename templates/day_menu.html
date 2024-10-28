@@ -19,17 +19,17 @@
         <tr>
             {% for menu in menus %}
             <th>
-                <a href="{% url 'recipe' menu.breakfast.id %}" class="title">{{ menu.breakfast.title }}</a>
+                <a href="{% url 'recipe' menu.breakfast.id %}" class="black-title">{{ menu.breakfast.title }}</a>
                 <br>
                 <img src="{{ menu.breakfast.img.url }}" style="max-width: 50%">
             </th>
             <th>
-                <a href="{% url 'recipe' menu.lunch.id %}" class="title">{{ menu.lunch.title }}</a>
+                <a href="{% url 'recipe' menu.lunch.id %}" class="black-title">{{ menu.lunch.title }}</a>
                 <br>
                 <img src="{{ menu.lunch.img.url }}" style="max-width: 50%">
             </th>
             <th>
-                <a href="{% url 'recipe' menu.dinner.id %}" class="title">{{ menu.dinner.title }}</a>
+                <a href="{% url 'recipe' menu.dinner.id %}" class="black-title">{{ menu.dinner.title }}</a>
                 <br>
                 <img src="{{ menu.dinner.img.url }}" style="max-width: 50%">
             </th>
