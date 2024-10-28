@@ -8,7 +8,7 @@ from accounts.models import Like
 
 
 def liked_recipes_view(request):
-    liked_dishes = Like.objects.filter(user=request.user).select_related('dish')
+    liked_dishes = Like.objects.filter(user=request.user).select_related('dish').filter(dish__is_active=True)
     
     return render(request, 'liked_recipes.html', {'liked_dishes': liked_dishes})
 
