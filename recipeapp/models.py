@@ -5,10 +5,10 @@ from django.db.models.functions import Round
 
 
 CATEGORIES = [
-    ('br', 'завтраки'),
-    ('l', 'обеды'),
-    ('din', 'ужины'),
-    ('des', 'десерты')
+    ('breakfast', 'завтраки'),
+    ('lunch', 'обеды'),
+    ('dinner', 'ужины'),
+    ('desert', 'десерты')
 ]
 
 WEEK_DAYS = [
