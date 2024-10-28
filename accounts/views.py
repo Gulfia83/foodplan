@@ -74,9 +74,12 @@ def create_like(request, pk):
 
         if created:
             message = 'Лайк добавлен!'
+            liked = True
         else:
-            message = 'Вы уже лайкнули это блюдо.'
+            like.delete()
+            message = 'Лайк удален!'
+            liked = False
 
-        return JsonResponse({'message': message})
+        return JsonResponse({'message': message, 'liked': liked})
 
     return JsonResponse({'message': 'Неверный метод.'}, status=405)

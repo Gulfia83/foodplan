@@ -8,22 +8,24 @@
 
   <div class="container">
     <table class="table table-responsive">
-      {% for recipe in recipes %}
+      {% for dish in dishes %}
           <tr>
-              <td><img src="{{ recipe.img.url }}" alt="" style="width: 200px; height: 130px;"></td>
-              <td><a href="{% url 'recipe' recipe.id %}" class="title">{{ recipe.title }}</a></td>
+              <td><img src="{{ dish.img.url }}" alt="" style="width: 200px; height: 130px;"></td>
+              <td><a href="{% url 'recipe' dish.id %}" class="title">{{ dish.title }}</a></td>
               <td>
-                  {% for item in recipe.items.all %}
+                  {% for item in dish.items.all %}
                       {{ item.ingredient.title }} - {{ item.quantity }}{{item.ingredient.units}},
                   {% endfor %}
               </td>
-              <td>{{ recipe.price }} руб.</td>
+              <td>{{ dish.price }} руб.</td>
               <td>
-                <form class="like-form" action="{% url 'accounts:like' recipe.id %}" method="post">
+                <form class="like-form" action="{% url 'accounts:like' dish.id %}" method="post">
                   {% csrf_token %}
-                  <button type="submit" class="like-button" data-dish-id="{{ recipe.id }}">Лайк</button>
-              </form>
-              <div id="like-status-{{ recipe.id }}"></div>
+                  <button type="submit" class="like-button {% if user.is_authenticated and dish.id in liked_dishes %}liked{% endif %}" data-dish-id="{{ dish.id }}">
+                    🤍
+                  </button>
+                </form>
+                <div id="like-status-{{ dish.id }}"></div>
               </td>
           </tr>
       {% endfor %}
@@ -43,11 +45,23 @@
             })
             .then(response => response.json())
             .then(data => {
-                const statusDiv = document.getElementById('like-status-' + form.querySelector('.like-button').getAttribute('data-dish-id'));
-                statusDiv.textContent = data.message; // Показываем сообщение о статусе лайка
+                const button = form.querySelector('.like-button');
+                const dishId = button.getAttribute('data-dish-id');
+                const statusDiv = document.getElementById('like-status-' + dishId);
+                
+                // Обновляем текст кнопки и класс в зависимости от статуса лайка
+                if (data.liked) {
+                    button.classList.add('liked'); // Добавляем класс для лайка
+                    button.textContent = '❤️'; // Изменяем текст на сердечко
+                    statusDiv.textContent = 'Вы лайкнули это блюдо!'; // Сообщение о статусе
+                } else {
+                    button.classList.remove('liked'); // Убираем класс для лайка
+                    button.textContent = '🤍'; // Изменяем текст на пустое сердечко
+                    statusDiv.textContent = 'Вы убрали лайк с этого блюда.'; // Сообщение о статусе
+                }
             })
             .catch(error => console.error('Ошибка:', error));
         });
     });
-  </script>
+</script>
 {% endblock %}

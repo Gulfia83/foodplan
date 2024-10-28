@@ -3,6 +3,7 @@ from django.db import models
 
 from recipeapp.models import Dish
 
+
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     avatar = models.ImageField(null=True, blank=True, upload_to='avatars')

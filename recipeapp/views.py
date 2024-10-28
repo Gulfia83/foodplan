@@ -19,16 +19,23 @@ def recipe_view(request, recipe_id):
 
 
 def cheap_recipes_view(request):
-    recipes = Dish.objects.get_total_price().filter(is_active=True,
+    dishes = Dish.objects.get_total_price().filter(is_active=True,
                                                     price__lte=400)
-
-    return render(request, 'all_recipes.html', context={'recipes': recipes, 'title': 'Рецепты'})
+    liked_dishes = Like.objects.filter(user=request.user).values_list('dish_id', flat=True)
+    
+    return render(request, 'all_recipes.html', context={'dishes': dishes,
+                                                        'liked_dishes': liked_dishes,
+                                                        'user': request.user})
+    
 
 
 def all_recipes_view(request):
-    recipes = Dish.objects.get_total_price().filter(is_active=True)
-
-    return render(request, 'all_recipes.html', context={'recipes': recipes, 'title': 'Рецепты'})
+    dishes = Dish.objects.get_total_price().filter(is_active=True)
+    liked_dishes = Like.objects.filter(user=request.user).values_list('dish_id', flat=True)
+    
+    return render(request, 'all_recipes.html', context={'dishes': dishes,
+                                                        'liked_dishes': liked_dishes,
+                                                        'user': request.user})
 
 
 def day_menu_view(request):
