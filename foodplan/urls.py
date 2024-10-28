@@ -11,7 +11,8 @@ from recipeapp.views import (
     all_recipes_view,
     day_menu_view,
     cheap_recipes_view,
-    liked_recipes_view
+    liked_recipes_view,
+    show_default_recipe,
 )
 
 
@@ -19,7 +20,7 @@ Dish = apps.get_model('recipeapp', 'Dish')
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('recipe/<int:recipe_id>', recipe_view, name='recipe'),
-    path('recipe/', recipe_view, {'recipe_id': Dish.objects.first().id}, name='recipe_default'),  
+    path('default_recipe/', show_default_recipe,  name='recipe_default'),  
     path('', index_view, name='index'),
     path('order/', order_view, name='order'),
     path('all_recipes/', all_recipes_view, name='all_recipes'),

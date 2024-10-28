@@ -60,3 +60,7 @@ def index_view(request):
 def order_view(request):
     return render(request, 'order.html')
 
+
+def show_default_recipe(request):
+    context = {'recipe': Dish.objects.first()}
+    return render(request, 'recipe.html', context)
